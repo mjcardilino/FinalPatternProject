@@ -1,59 +1,50 @@
-function [] = skeletonViewer(skeleton, image, nSkeleton)
+function [] = skeletonViewer(metaData, image)
 
-Hip_Center = 1;
-Spine = 2;
-Shoulder_Center = 3;
-Head = 4;
-Shoulder_Left = 5;
-Elbow_Left = 6;
-Wrist_Left = 7;
-Hand_Left = 8;
-Shoulder_Right = 9;
-Elbow_Right = 10;
-Wrist_Right = 11;
-Hand_Right = 12;
-Hip_Left = 13;
-Knee_Left = 14;
-Ankle_Left = 15;
-Foot_Left = 16;
-Hip_Right = 17;
-Knee_Right = 18;
-Ankle_Right = 19;
-Foot_Right = 20;
+skeleton = metaData.JointPositions(:,:,1);
+nSkeleton = metaData.IsBodyTracked(1);
 
 imshow(image);
 
-SkeletonConnectionMap = [[1 2]; % Spine
-    [2 3];
-    [3 4];
-    [3 5]; %Left Hand
-    [5 6];
-    [6 7];
-    [7 8];
-    [3 9]; %Right Hand
-    [9 10];
-    [10 11];
-    [11 12];
-    [1 17]; % Right Leg
-    [17 18];
-    [18 19];
-    [19 20];
-    [1 13]; % Left Leg
-    [13 14];
-    [14 15];
-    [15 16]];
+SkeletonConnectionMap = [ [4 3];  % Neck
+                          [3 21]; % Head
+                          [21 2]; % Right Leg
+                          [2 1];
+                          [21 9];
+                          [9 10];  % Hip
+                          [10 11];
+                          [11 12]; % Left Leg
+                          [12 24];
+                          [12 25];
+                          [21 5];  % Spine
+                          [5 6];
+                          [6 7];   % Left Hand
+                          [7 8];
+                          [8 22];
+                          [8 23];
+                          [1 17];
+                          [17 18];
+                          [18 19];  % Right Hand
+                          [19 20];
+                          [1 13];
+                          [13 14];
+                          [14 15];
+                          [15 16];
+                        ];
 
-for i = 1:19
-    
-    if nSkeleton > 0
-        X1 = [skeleton(SkeletonConnectionMap(i,1),1,1) skeleton(SkeletonConnectionMap(i,2),1,1)];
-        Y1 = [skeleton(SkeletonConnectionMap(i,1),2,1) skeleton(SkeletonConnectionMap(i,2),2,1)];
+% Find the indexes of the tracked bodies.
+anyBodiesTracked = any(metaData.IsBodyTracked ~= 0);
+trackedBodies = find(metaData.IsBodyTracked);
+
+% Find number of Skeletons tracked.
+nBodies = length(trackedBodies);
+
+colorJointIndices = metaData.ColorJointIndices(:, :, trackedBodies);
+                    
+for i = 1:size(SkeletonConnectionMap,1)
+    for body=1:nBodies
+        X1 = [colorJointIndices(SkeletonConnectionMap(i,1),1,body) colorJointIndices(SkeletonConnectionMap(i,2),1,body)];
+        Y1 = [colorJointIndices(SkeletonConnectionMap(i,1),2,body) colorJointIndices(SkeletonConnectionMap(i,2),2,body)];
         line(X1,Y1, 'LineWidth', 1.5, 'LineStyle', '-', 'Marker', '+', 'Color', 'r');
-    end
-    if nSkeleton > 1
-        X2 = [skeleton(SkeletonConnectionMap(i,1),1,2) skeleton(SkeletonConnectionMap(i,2),1,2)];
-        Y2 = [skeleton(SkeletonConnectionMap(i,1),2,2) skeleton(SkeletonConnectionMap(i,2),2,2)];
-        line(X2,Y2, 'LineWidth', 1.5, 'LineStyle', '-', 'Marker', '+', 'Color', 'g');
     end
     hold on;
 end

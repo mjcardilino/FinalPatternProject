@@ -24,6 +24,6 @@ while(1)
     
     [frame, ts, metaData] = getdata(vid_depth);
     image = getdata(vid_color);
-    skeletonViewer(metaData.JointPositions(:,:,1), image, metaData.IsBodyTracked(1));
+    skeletonViewer(metaData, image);
     pause(1);
 end
