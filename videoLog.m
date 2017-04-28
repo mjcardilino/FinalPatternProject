@@ -17,7 +17,10 @@ vid_depth.FramesPerTrigger = 1;
 triggerconfig(vid_depth, 'manual');
 % preview(vid_depth);
 
+positionData = [];
+ctr = 0;
 while(1)
+    ctr = ctr + 1;
     start(vid_color);
     start(vid_depth);
 
@@ -26,6 +29,12 @@ while(1)
     
     [frame, ts, metaData] = getdata(vid_depth);
     image = getdata(vid_color);
+    % should collect all the metaDatas
+    positionData(ctr) = metaData;
     skeletonViewer(metaData, image);
-    pause(1);
 end
+
+% save the positon data to a .mat file
+save('positionData');
+% idk, this might save it to a csv
+save('positionData.csv', 'positionData', '-v4');
