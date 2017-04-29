@@ -45,6 +45,7 @@ for i = 1:size(SkeletonConnectionMap,1)
         X1 = [colorJointIndices(SkeletonConnectionMap(i,1),1,body) colorJointIndices(SkeletonConnectionMap(i,2),1,body)];
         Y1 = [colorJointIndices(SkeletonConnectionMap(i,1),2,body) colorJointIndices(SkeletonConnectionMap(i,2),2,body)];
         line(X1,Y1, 'LineWidth', 1.5, 'LineStyle', '-', 'Marker', '+', 'Color', 'r');
+        drawnow;
     end
     hold on;
 end
@@ -52,6 +53,7 @@ title(['CaptureNumber' num2str(ctr)]);
 hold off;
 
 if nBodies > 0
+    fprintf(['metaData' num2str(ctr) '.csv']);
     % save the positon data to a .mat file
     save('metaData');
     % idk, this might save it to a csv
