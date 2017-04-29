@@ -1,4 +1,4 @@
-function [] = skeletonViewer(metaData, image)
+function [] = skeletonViewer(metaData, image, ctr)
 
 skeleton = metaData.JointPositions(:,:,1);
 nSkeleton = metaData.IsBodyTracked(1);
@@ -48,5 +48,14 @@ for i = 1:size(SkeletonConnectionMap,1)
     end
     hold on;
 end
-title(num2str(nSkeleton));
+title(['CaptureNumber' ctr]);
 hold off;
+
+if nBodies > 0
+    % save the positon data to a .mat file
+    save('metaData');
+    % idk, this might save it to a csv
+    save(['metaData' num2str(ctr) '.csv'], 'metaData', '-v4');
+end
+
+end

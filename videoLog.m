@@ -29,12 +29,6 @@ while(1)
     
     [frame, ts, metaData] = getdata(vid_depth);
     image = getdata(vid_color);
-    % should collect all the metaDatas
-    positionData(ctr) = metaData;
-    skeletonViewer(metaData, image);
-end
 
-% save the positon data to a .mat file
-save('positionData');
-% idk, this might save it to a csv
-save('positionData.csv', 'positionData', '-v4');
+    skeletonViewer(metaData, image, ctr);
+end
