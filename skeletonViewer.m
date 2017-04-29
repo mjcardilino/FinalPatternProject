@@ -55,7 +55,7 @@ if nBodies > 0
     % save the positon data to a .mat file
     save('metaData');
     % idk, this might save it to a csv
-    save(['metaData' num2str(ctr) '.csv'], 'metaData', '-v4');
+    csvwrite(['metaData' num2str(ctr) '.csv'], metaData);
 end
 
 end
