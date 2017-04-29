@@ -1,6 +1,10 @@
-function [registered] = skeletonViewer(metaData, image, ctr)
+close all;
+clc;
 
-registered = 0;
+s = load ('./metaData2.mat');
+metaData = s.metaData;
+image = s.imageData;
+
 skeleton = metaData.JointPositions(:,:,1);
 nSkeleton = metaData.IsBodyTracked(1);
 
@@ -41,7 +45,7 @@ colorJointIndices = metaData.ColorJointIndices(:, :, trackedBodies);
 
 if registered > 0
     imshow(image);
-    title(['CaptureNumber' num2str(ctr)]); hold on;
+    title('Test Print'); hold on;
     
     for i = 1:size(SkeletonConnectionMap,1)
         for body=1:registered
@@ -51,15 +55,4 @@ if registered > 0
         end
     hold on;
     end
-    
-    fprintf(['metaData' num2str(ctr) '\n']);
-    
-    S = struct;
-    S.('metaData') = metaData;
-    S.('imageData') = image;
-    
-    save(['metaData' num2str(ctr)], '-struct', 'S');
-    clear S;
-end
-
 end

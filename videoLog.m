@@ -20,6 +20,7 @@ triggerconfig(vid_depth, 'manual');
 positionData = [];
 ctr = 0;
 while(1)
+    fprintf('done');
     ctr = ctr + 1;
     start(vid_color);
     start(vid_depth);
@@ -30,5 +31,7 @@ while(1)
     [frame, ts, metaData] = getdata(vid_depth);
     image = getdata(vid_color);
 
-    skeletonViewer(metaData, image, ctr);
+    [skeletons_found] = skeletonViewer(metaData, image, ctr);
+    if (skeletons_found == 0); ctr = ctr - 1; end
+    pause(1);
 end
