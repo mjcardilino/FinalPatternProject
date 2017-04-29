@@ -48,7 +48,7 @@ for i = 1:size(SkeletonConnectionMap,1)
     end
     hold on;
 end
-title(['CaptureNumber' ctr]);
+title(['CaptureNumber' num2str(ctr)]);
 hold off;
 
 if nBodies > 0
