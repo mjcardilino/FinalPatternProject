@@ -17,3 +17,9 @@ for trained_sets = 1:length(train_gestures)
     
     successful(trained_sets) = runHmm(testing, training, string(train_gestures(trained_sets)));
 end
+
+for i = 1:trained_sets
+    if successful(i) > 0.75
+        strcat(string(train_gestures(i)), ': ', num2str(successful(i)*100), '%')
+    end
+end
