@@ -5,7 +5,9 @@ if exist('TrainingSets.mat')
 end
 RightHand = 12;
 
-% set to true if you are collecting training sets
+% set to true if you want to run this algorithm on a live input 
+liveInput = false;
+% set to true if you are collecting and saving training sets
 saveDataForTrainingSets = true;
 % set to true and uncomment lines 11-12 to use Jonathan's data set, set to
 % false & use lines 22-23 for our collected data sets
@@ -25,10 +27,14 @@ usingJonathonsDataSets = false;
 test_gesture = 'swipe_right';
 train_gestures = {'cw_circle' 'swipe_right'};
 
+if liveInput
+    test_gesture = 'live_input';
+end
+
 % Add the path to the HMM gesture recognition toolkit
 addpath('gesture', 'gesture/data/test', 'gesture/data/train');
 
-if saveDataForTrainingSets
+if saveDataForTrainingSets || liveInput
     dynamicDataCollection;
     switch(test_gesture)
         case 'swipe_right'
@@ -93,8 +99,9 @@ if saveDataForTrainingSets
     end
     
     save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'ccw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
+end
     
-else
+if ~saveDataForTrainingSets 
     if usingJonathonsDataSets
         testing = get_xyz_data('data/test',test_gesture);
         
@@ -122,6 +129,8 @@ else
                 testing = swipe_left(:,:,:,RightHand);
             case 'swipe_right_test'
                 testing = swipe_right_test(:,:,:,RightHand);
+            case 'live_input'
+                testing = positionData(:,:,:,RightHand);
         end
         plotFigures(testing, 'Testing Figure');
         
