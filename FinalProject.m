@@ -1,6 +1,8 @@
 clear; close all; clc
 imaqreset;
-load('TrainingSets.mat');
+if exist('TrainingSets.mat')
+    load('TrainingSets.mat');
+end
 RightHand = 12;
 
 % set to true if you are collecting training sets
@@ -20,7 +22,7 @@ usingJonathonsDataSets = false;
 % noisy_right
 % swipe_left
 % swipe_right_test
-test_gesture = 'noisy_cw';
+test_gesture = 'swipe_right';
 train_gestures = {'cw_circle' 'swipe_right'};
 
 % Add the path to the HMM gesture recognition toolkit
@@ -32,8 +34,9 @@ if saveDataForTrainingSets
         case 'swipe_right'
             if exist(test_gesture)
                 [~, numSets, ~] = size(swipe_right);
-                swipe_right = positionData;
-                swipe_right(:,numSets+1,:) = positionData;
+                for somecounter = 1:3
+                    swipe_right(:,numSets+1,somecounter) = positionData(:,:,somecounter);
+                end
             else
                 swipe_right = positionData;
             end
@@ -41,8 +44,9 @@ if saveDataForTrainingSets
         case 'noisy_right'
             if exist(test_gesture)
                 [~, numSets, ~] = size(noisy_right);
-                noisy_right = positionData;
-                noisy_right(:,numSets+1,:) = positionData;
+                for somecounter = 1:3
+                    noisy_right(:,numSets+1,somecounter) = positionData(:,:,somecounter);
+                end
             else
                 noisy_right = positionData;
             end
@@ -50,8 +54,9 @@ if saveDataForTrainingSets
         case 'cw_circle'
             if exist(test_gesture)
                 [~, numSets, ~] = size(cw_circle);
-                cw_circle = positionData;
-                cw_circle(:,numSets+1,:) = positionData;
+                for somecounter = 1:3
+                    cw_circle(:,numSets+1,somecounter) = positionData(:,:,somecounter);
+                end
             else
                 cw_circle = positionData;
             end
@@ -59,8 +64,9 @@ if saveDataForTrainingSets
         case 'noisy_cw'
             if exist(test_gesture)
                 [~, numSets, ~] = size(noisy_cw);
-                noisy_cw = positionData;
-                noisy_cw(:,numSets+1,:) = positionData;
+                for somecounter = 1:3
+                    noisy_cw(:,numSets+1,somecounter) = positionData(:,:,somecounter);
+                end
             else
                 noisy_cw = positionData;
             end
@@ -68,8 +74,9 @@ if saveDataForTrainingSets
         case 'ccw_circle'
             if exist(test_gesture)
                 [~, numSets, ~] = size(ccw_circle);
-                ccw_circle = positionData;
-                ccw_circle(:,numSets+1,:) = positionData;
+                for somecounter = 1:3
+                    ccw_circle(:,numSets+1,somecounter) = positionData(:,:,somecounter);
+                end
             else
                 ccw_circle = positionData;
             end
@@ -77,14 +84,16 @@ if saveDataForTrainingSets
         case 'swipe_left'
             if exist(test_gesture)
                 [~, numSets, ~] = size(swipe_left);
-                swipe_left = positionData;
-                swipe_left(:,numSets+1,:) = positionData;
+                for somecounter = 1:3
+                    swipe_left(:,numSets+1,somecounter) = positionData(:,:,somecounter);
+                end
             else
                 swipe_left = positionData;
             end
     end
     
     save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'ccw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
+    
 else
     if usingJonathonsDataSets
         testing = get_xyz_data('data/test',test_gesture);
