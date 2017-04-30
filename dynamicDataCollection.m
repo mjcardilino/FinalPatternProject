@@ -20,7 +20,6 @@ while triggered < 2
     if ~isempty(trackedBody)
         triggered = triggered + 1
     end
-    triggered = triggered + 1;
     if triggered == 2
         for frame = 1:vid_depth.FramesPerTrigger
             positionData(:,:,(ctr-1)*5+frame) = metaData(frame).JointPositions(:,:,trackedBody(1));
