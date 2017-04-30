@@ -31,7 +31,7 @@ for ctr = 1:num_runs
     
     [frame, ts, metaData] = getdata(vid_depth);
     for frame = 1:vid_depth.FramesPerTrigger
-        positionData(:,:,(ctr-1)*5+frame) = metaData(frame).JointPositions(:,:,1);
+        positionData(:,:,(ctr*5) = metaData.JointPositions(:,:,1);
     end
 end
 stop(vid_depth)
