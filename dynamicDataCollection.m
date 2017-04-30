@@ -8,7 +8,8 @@
 %         num_runs = 20;
 % end
 
-num_runs = 20;
+numTriggers = 20;
+framesPerTrigger = 5;
 
 % Color data
 % vid_color = videoinput('kinect', 1);
@@ -19,10 +20,10 @@ num_runs = 20;
 vid_depth = videoinput('kinect', 2);
 src_depth = getselectedsource(vid_depth);
 src_depth.EnableBodyTracking = 'on';
-vid_depth.FramesPerTrigger = 5;
+vid_depth.FramesPerTrigger = framesPerTrigger;
 % triggerconfig([vid_color vid_depth], 'manual');
 triggerconfig(vid_depth, 'manual');
-for ctr = 1:num_runs
+for ctr = 1:numTriggers
     fprintf(['run ' num2str(ctr) ' complete']);
 %     start([vid_color vid_depth]);
     start(vid_depth);
@@ -34,4 +35,6 @@ for ctr = 1:num_runs
         positionData(:,:,(ctr-1)*5+frame) = metaData(frame).JointPositions(:,:,1);
     end
 end
+
+positionData = reformatPositionData(positionData, framesPerTrigger*numTriggers);
 stop(vid_depth)
