@@ -1,5 +1,5 @@
 numTriggers = 1;
-framesPerTrigger = 5;
+framesPerTrigger = 100;
 
 % Depth data
 vid_depth = videoinput('kinect', 2);
