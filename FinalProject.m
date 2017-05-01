@@ -24,7 +24,7 @@ usingJonathonsDataSets = false;
 % noisy_right
 % swipe_left
 % swipe_right_test
-test_gesture = 'swipe_right';
+test_gesture = 'noisy_cw';
 train_gestures = {'cw_circle' 'swipe_right'};
 
 if liveInput
@@ -99,6 +99,7 @@ if saveDataForTrainingSets || liveInput
     end
     
 %     save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'ccw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
+    save('TrainingSets.mat', 'swipe_right', 'ccw_circle', 'cw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
 end
     
 if ~saveDataForTrainingSets 
