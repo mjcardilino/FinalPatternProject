@@ -8,7 +8,7 @@ RightHand = 12;
 % set to true if you want to run this algorithm on a live input 
 liveInput = false;
 % set to true if you are collecting and saving training sets
-saveDataForTrainingSets = true;
+saveDataForTrainingSets = false;
 % set to true and uncomment lines 11-12 to use Jonathan's data set, set to
 % false & use lines 22-23 for our collected data sets
 usingJonathonsDataSets = false;
@@ -24,7 +24,7 @@ usingJonathonsDataSets = false;
 % noisy_right
 % swipe_left
 % swipe_right_test
-test_gesture = 'noisy_cw';
+test_gesture = 'noisy_right';
 train_gestures = {'cw_circle' 'swipe_right'};
 
 if liveInput
@@ -98,8 +98,7 @@ if saveDataForTrainingSets || liveInput
             end
     end
     
-%     save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'ccw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
-    save('TrainingSets.mat', 'swipe_right', 'ccw_circle', 'cw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
+    save('TrainingSets.mat', 'swipe_right', 'ccw_circle', 'cw_circle', 'swipe_left', 'noisy_right', 'noisy_cw', 'swipe_right_test', 'cw_circle_test');
 end
     
 if ~saveDataForTrainingSets 
@@ -142,11 +141,5 @@ if ~saveDataForTrainingSets
         training = swipe_right;
         successful(2) = runHmm(testing, training, 'Swipe Right');
         plotFigures(training, 'Swipe Right');
-        
-        for i = 1:2
-            if successful(i) > 0.75
-                strcat(string(train_gestures(i)), ': ', num2str(successful(i)*100), '%')
-            end
-        end
     end
 end
