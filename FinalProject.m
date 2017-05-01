@@ -5,7 +5,7 @@ if exist('TrainingSets.mat')
 end
 RightHand = 12;
 
-% set to true if you want to run this algorithm on a live input 
+% set to true if you want to run this algorithm on a live input
 liveInput = false;
 % set to true if you are collecting and saving training sets
 saveDataForTrainingSets = false;
@@ -13,6 +13,8 @@ saveDataForTrainingSets = false;
 usingJonathonsTestSet = false;
 usingJonathonsDataSets = true;
 usingOurDataSets = true;
+
+saveFigures = false;
 
 % Jonathan Hall's data sets:
 % test_gesture = 'circle'
@@ -59,8 +61,8 @@ if saveDataForTrainingSets || liveInput
     
     save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'halfAndHalfTestData');
 end
-    
-if ~saveDataForTrainingSets 
+
+if ~saveDataForTrainingSets
     if usingJonathonsTestSet
         testing = get_xyz_data('data/test',test_gesture);
     else
@@ -94,5 +96,12 @@ if ~saveDataForTrainingSets
         training = swipe_right;
         successful(2) = runHmm(testing, training, 'Swipe Right');
         plotFigures(training, 'Swipe Right');
+    end
+end
+
+if saveFigures
+    h = get(0,'children');
+    for i=1:length(h)
+        saveas(h(i), ['figure' num2str(i)], 'jpg');
     end
 end
