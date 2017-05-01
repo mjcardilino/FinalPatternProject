@@ -18,13 +18,10 @@ usingJonathonsDataSets = false;
 % train_gestures = {'circle' 'z' 'l' 'm' 'round' 'x'};
 
 % Our possible test gestures:
-% ccw_circle
 % cw_circle_test
-% noisy_cw
-% noisy_right
-% swipe_left
 % swipe_right_test
-test_gesture = 'swipe_right_test';
+% halfAndHalfTestData
+test_gesture = 'halfAndHalfTestData';
 train_gestures = {'cw_circle' 'swipe_right'};
 
 if liveInput
@@ -47,16 +44,6 @@ if saveDataForTrainingSets || liveInput
                 swipe_right = positionData;
             end
             
-        case 'noisy_right'
-            if exist(test_gesture)
-                [~, numSets, ~] = size(noisy_right);
-                for somecounter = 1:3
-                    noisy_right(:,numSets+1,somecounter) = positionData(:,:,somecounter);
-                end
-            else
-                noisy_right = positionData;
-            end
-            
         case 'cw_circle'
             if exist(test_gesture)
                 [~, numSets, ~] = size(cw_circle);
@@ -66,40 +53,9 @@ if saveDataForTrainingSets || liveInput
             else
                 cw_circle = positionData;
             end
-            
-        case 'noisy_cw'
-            if exist(test_gesture)
-                [~, numSets, ~] = size(noisy_cw);
-                for somecounter = 1:3
-                    noisy_cw(:,numSets+1,somecounter) = positionData(:,:,somecounter);
-                end
-            else
-                noisy_cw = positionData;
-            end
-            
-        case 'ccw_circle'
-            if exist(test_gesture)
-                [~, numSets, ~] = size(ccw_circle);
-                for somecounter = 1:3
-                    ccw_circle(:,numSets+1,somecounter) = positionData(:,:,somecounter);
-                end
-            else
-                ccw_circle = positionData;
-            end
-            
-        case 'swipe_left'
-            if exist(test_gesture)
-                [~, numSets, ~] = size(swipe_left);
-                for somecounter = 1:3
-                    swipe_left(:,numSets+1,somecounter) = positionData(:,:,somecounter);
-                end
-            else
-                swipe_left = positionData;
-            end
     end
     
-%     save('TrainingSets.mat', 'swipe_right', 'ccw_circle', 'cw_circle', 'swipe_left', 'noisy_right', 'noisy_cw', 'swipe_right_test', 'cw_circle_test');
-    save('TrainingSets.mat', 'swipe_right', 'cw_circle');
+    save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'halfAndHalfTestData');
 end
     
 if ~saveDataForTrainingSets 
@@ -118,20 +74,14 @@ if ~saveDataForTrainingSets
         end
     else
         switch(test_gesture)
-            case 'ccw_circle'
-                testing = ccw_circle;
             case 'cw_circle_test'
                 testing = cw_circle_test;
-            case 'noisy_cw'
-                testing = noisy_cw;
-            case 'noisy_right'
-                testing = noisy_right;
-            case 'swipe_left'
-                testing = swipe_left;
             case 'swipe_right_test'
                 testing = swipe_right_test;
             case 'live_input'
                 testing = positionData;
+            case 'halfAndHalfTestData'
+                testing = halfAndHalfTestData;
         end
         plotFigures(testing, 'Testing Figure');
         
