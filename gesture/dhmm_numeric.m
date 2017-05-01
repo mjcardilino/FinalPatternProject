@@ -41,10 +41,10 @@ if nargin<6   tol=0.0001; end;
 if nargin<5   cyc=100; end;
 if nargin<4   K=2; end;
 
-fprintf('\n********************************************************************\n');
-fprintf('Training %i sequences of maximum length %i from an alphabet of size %i\n',N,TMAX,num_bins);
-fprintf('HMM with %i hidden states\n',K);
-fprintf('********************************************************************\n');
+% fprintf('\n********************************************************************\n');
+% fprintf('Training %i sequences of maximum length %i from an alphabet of size %i\n',N,TMAX,num_bins);
+% fprintf('HMM with %i hidden states\n',K);
+% fprintf('********************************************************************\n');
 
 E = (0.1*rand(num_bins,K)+ones(num_bins,K))/num_bins;
 E = cdiv(E,csum(E));
@@ -160,21 +160,12 @@ for cycle=1:cyc
   oldlik=lik;
   lik=sum(Scale);
   LL=[LL lik];
-  fprintf('\ncycle %i log likelihood = %f ',cycle,lik);  
+%   fprintf('\ncycle %i log likelihood = %f ',cycle,lik);  
   if (cycle<=2)    likbase=lik;
   elseif (lik<(oldlik - 1e-6))     fprintf('vionum_binstion');
   elseif ((lik-likbase)<(1 + tol)*(oldlik-likbase)||~isfinite(lik)) 
-    fprintf('\nend\n');    return;
+%     fprintf('\nend\n');    
+    return;
   end;
 
 end
-
-
-
-
-
-
-
-
-
-
