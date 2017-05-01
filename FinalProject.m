@@ -106,7 +106,7 @@ if ~saveDataForTrainingSets
     if usingJonathonsDataSets
         testing = get_xyz_data('data/test',test_gesture);
         
-        for trained_sets = 1:lenth(train_gestures)
+        for trained_sets = 1:length(train_gestures)
             training = get_xyz_data('data/train',string(train_gestures(trained_sets)));
             successful(trained_sets) = runHmm(testing, training, string(train_gestures(trained_sets)));
         end
