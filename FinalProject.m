@@ -9,8 +9,8 @@ RightHand = 12;
 liveInput = false;
 % set to true if you are collecting and saving training sets
 saveDataForTrainingSets = false;
-% set to true and uncomment lines 11-12 to use Jonathan's data set, set to
-% false & use lines 22-23 for our collected data sets
+% set to true and uncomment lines 17-18 to use Jonathan's data set, set to
+% false & use lines 24-25 for our collected data sets
 usingJonathonsDataSets = false;
 
 % Jonathan Hall's data sets:
