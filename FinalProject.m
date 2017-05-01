@@ -98,7 +98,7 @@ if saveDataForTrainingSets || liveInput
             end
     end
     
-    save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'ccw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
+%     save('TrainingSets.mat', 'swipe_right', 'cw_circle', 'ccw_circle', 'swipe_left', 'noisy_right', 'noisy_cw');
 end
     
 if ~saveDataForTrainingSets 
@@ -118,27 +118,27 @@ if ~saveDataForTrainingSets
     else
         switch(test_gesture)
             case 'ccw_circle'
-                testing = ccw_circle(:,:,:,RightHand);
+                testing = ccw_circle;
             case 'cw_circle_test'
-                testing = cw_circle_test(:,:,:,RightHand);
+                testing = cw_circle_test;
             case 'noisy_cw'
-                testing = noisy_cw(:,:,:,RightHand);
+                testing = noisy_cw;
             case 'noisy_right'
-                testing = noisy_right(:,:,:,RightHand);
+                testing = noisy_right;
             case 'swipe_left'
-                testing = swipe_left(:,:,:,RightHand);
+                testing = swipe_left;
             case 'swipe_right_test'
-                testing = swipe_right_test(:,:,:,RightHand);
+                testing = swipe_right_test;
             case 'live_input'
-                testing = positionData(:,:,:,RightHand);
+                testing = positionData;
         end
         plotFigures(testing, 'Testing Figure');
         
-        training = cw_circle(:,:,:,RightHand);
+        training = cw_circle;
         successful(1) = runHmm(testing, training, 'Clockwise Circle');
         plotFigures(training, 'Clockwise Circle');
         
-        training = swipe_right(:,:,:,RightHand);
+        training = swipe_right;
         successful(2) = runHmm(testing, training, 'Swipe Right');
         plotFigures(training, 'Swipe Right');
         
