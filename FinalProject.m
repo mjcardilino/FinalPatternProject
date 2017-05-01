@@ -8,7 +8,7 @@ RightHand = 12;
 % set to true if you want to run this algorithm on a live input 
 liveInput = false;
 % set to true if you are collecting and saving training sets
-saveDataForTrainingSets = true;
+saveDataForTrainingSets = false;
 % set to true and uncomment lines 11-12 to use Jonathan's data set, set to
 % false & use lines 22-23 for our collected data sets
 usingJonathonsDataSets = false;
@@ -24,7 +24,7 @@ usingJonathonsDataSets = false;
 % noisy_right
 % swipe_left
 % swipe_right_test
-test_gesture = 'cw_circle';
+test_gesture = 'swipe_right_test';
 train_gestures = {'cw_circle' 'swipe_right'};
 
 if liveInput
