@@ -1,4 +1,4 @@
-function [success_rate] = runHmm(testing, training, test_gesture)
+function [success_rate, tLL, gestureRecThreshold, found] = runHmm(testing, training, test_gesture)
 % Modified version of test.m presented by Jonathan C. Hall
 
 D = 3; % the number of dimensions to use: X, Y, Z
@@ -59,9 +59,11 @@ for j=1:length(ATestBinned)
 	if (tLL(j,1) > gestureRecThreshold)
 		recs = recs + 1;
 		fprintf('Log likelihood: %f > %f (threshold) -- FOUND %s GESTURE!\n',tLL(j,1),gestureRecThreshold,test_gesture);
+        found(j,1) = 1;
 	else
 		fprintf('Log likelihood: %f < %f (threshold) -- NO %s GESTURE.\n',tLL(j,1),gestureRecThreshold,test_gesture);
-	end
+        found(j,1) = 0;
+    end
 end
 success_rate = recs/length(ATestBinned);
 fprintf('Recognition success rate: %f percent\n',100*success_rate);

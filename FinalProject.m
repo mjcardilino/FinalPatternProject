@@ -81,7 +81,8 @@ if ~saveDataForTrainingSets
     if usingJonathonsDataSets
         for trained_sets = 3:length(train_gestures)
             training = get_xyz_data('data/train',string(train_gestures(trained_sets)));
-            successful(trained_sets) = runHmm(testing, training, string(train_gestures(trained_sets)));
+            [successful(trained_sets), loglikelihood(:,trained_sets), threshold(trained_sets), found(:,trained_sets)] = ...
+                runHmm(testing, training, string(train_gestures(trained_sets)));
             plotFigures(training, string(train_gestures(trained_sets)));
         end
     end
@@ -90,14 +91,19 @@ if ~saveDataForTrainingSets
         plotFigures(testing, 'Testing Figure');
         
         training = cw_circle;
-        successful(1) = runHmm(testing, training, 'Clockwise Circle');
+        [successful(1), loglikelihood(:,1), threshold(1), found(:,1)] = runHmm(testing, training, 'Clockwise Circle');
         plotFigures(training, 'Clockwise Circle');
         
         training = swipe_right;
-        successful(2) = runHmm(testing, training, 'Swipe Right');
+        [successful(2), loglikelihood(:,2), threshold(2), found(:,2)] = runHmm(testing, training, 'Swipe Right');
         plotFigures(training, 'Swipe Right');
     end
 end
+
+train_gestures
+loglikelihood
+threshold
+found
 
 if saveFigures
     h = get(0,'children');
