@@ -100,6 +100,7 @@ if ~saveDataForTrainingSets
     end
 end
 
+fprintf('\n\n********************************************************************\n');
 train_gestures
 loglikelihood
 threshold
