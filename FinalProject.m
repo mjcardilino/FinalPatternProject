@@ -9,9 +9,10 @@ RightHand = 12;
 liveInput = false;
 % set to true if you are collecting and saving training sets
 saveDataForTrainingSets = false;
-% set to true and uncomment lines 17-18 to use Jonathan's data set, set to
-% false & use lines 24-25 for our collected data sets
-usingJonathonsDataSets = false;
+
+usingJonathonsTestSet = false;
+usingJonathonsDataSets = true;
+usingOurDataSets = true;
 
 % Jonathan Hall's data sets:
 % test_gesture = 'circle'
@@ -22,7 +23,8 @@ usingJonathonsDataSets = false;
 % swipe_right_test
 % halfAndHalfTestData
 test_gesture = 'halfAndHalfTestData';
-train_gestures = {'cw_circle' 'swipe_right'};
+% train_gestures = {'cw_circle' 'swipe_right'};
+train_gestures = {'cw_circle' 'swipe_right' 'circle' 'z' 'l' 'm' 'round' 'x'};
 
 if liveInput
     test_gesture = 'live_input';
@@ -59,19 +61,8 @@ if saveDataForTrainingSets || liveInput
 end
     
 if ~saveDataForTrainingSets 
-    if usingJonathonsDataSets
+    if usingJonathonsTestSet
         testing = get_xyz_data('data/test',test_gesture);
-        
-        for trained_sets = 1:length(train_gestures)
-            training = get_xyz_data('data/train',string(train_gestures(trained_sets)));
-            successful(trained_sets) = runHmm(testing, training, string(train_gestures(trained_sets)));
-        end
-        
-        for i = 1:trained_sets
-            if successful(i) > 0.75
-                strcat(string(train_gestures(i)), ': ', num2str(successful(i)*100), '%')
-            end
-        end
     else
         switch(test_gesture)
             case 'cw_circle_test'
@@ -83,6 +74,17 @@ if ~saveDataForTrainingSets
             case 'halfAndHalfTestData'
                 testing = halfAndHalfTestData;
         end
+    end
+    
+    if usingJonathonsDataSets
+        for trained_sets = 3:length(train_gestures)
+            training = get_xyz_data('data/train',string(train_gestures(trained_sets)));
+            successful(trained_sets) = runHmm(testing, training, string(train_gestures(trained_sets)));
+            plotFigures(training, string(train_gestures(trained_sets)));
+        end
+    end
+    
+    if usingOurDataSets
         plotFigures(testing, 'Testing Figure');
         
         training = cw_circle;
